@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_spanish_ci">luncheria</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="compañia" view="colnames">
+<left>34</left>
+<top>68</top>
+<width>99</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `compañia` (
+  `Rif` char(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Nombre` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
+  `Divisa` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`Rif`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="detalle_pedido" view="colnames">
+<left>607</left>
+<top>46</top>
+<width>97</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `detalle_pedido` (
+  `Numero` int(11) NOT NULL AUTO_INCREMENT,
+  `Producto` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `TotalDls` decimal(12,2) NOT NULL,
+  `TotalBs` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`Numero`,`Producto`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="pedido" view="colnames">
+<left>383</left>
+<top>46</top>
+<width>106</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `pedido` (
+  `Numero` int(11) NOT NULL AUTO_INCREMENT,
+  `Cliente` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Repartidor` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Total` decimal(12,2) NOT NULL,
+  `Divisa` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`Numero`,`Cliente`,`Repartidor`),
+  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Numero`) REFERENCES `detalle_pedido` (`Numero`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="producto" view="colnames">
+<left>799</left>
+<top>48</top>
+<width>112</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `producto` (
+  `Codigo` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
+  `Descripcion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Precio` decimal(12,2) NOT NULL,
+  `Estatus` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="rol" view="colnames">
+<left>802</left>
+<top>366</top>
+<width>96</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `rol` (
+  `Rol_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Desc_rol` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Rol_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="usuario" view="colnames">
+<left>379</left>
+<top>275</top>
+<width>112</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `usuario` (
+  `Cedula` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Usuario` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `Contraseña` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `Nombres` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Apellidos` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Email` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
+  `Estatus` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Cedula`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="usuario_rol" view="colnames">
+<left>609</left>
+<top>347</top>
+<width>86</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `usuario_rol` (
+  `Id_Rol` int(11) NOT NULL AUTO_INCREMENT,
+  `Rol_id` int(11) DEFAULT NULL,
+  `Cedula` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`Id_Rol`),
+  KEY `Rol_id` (`Rol_id`),
+  KEY `Cedula` (`Cedula`),
+  CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`Rol_id`) REFERENCES `rol` (`Rol_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
