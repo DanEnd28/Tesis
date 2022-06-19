@@ -16,21 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`luncheria` /*!40100 DEFAULT CHARACTER S
 
 USE `luncheria`;
 
-/*Table structure for table `compañia` */
-
-DROP TABLE IF EXISTS `compañia`;
-
-CREATE TABLE `compañia` (
-  `Rif` char(11) COLLATE utf8_spanish_ci NOT NULL,
-  `Nombre` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
-  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
-  `Telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
-  `Divisa` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`Rif`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-/*Data for the table `compañia` */
-
 /*Table structure for table `detalle_pedido` */
 
 DROP TABLE IF EXISTS `detalle_pedido`;
@@ -47,10 +32,38 @@ CREATE TABLE `detalle_pedido` (
   KEY `Numero` (`Numero`),
   KEY `Producto` (`Producto`),
   CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`Numero`) REFERENCES `pedido` (`Numero`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`Producto`) REFERENCES `producto` (`Codigo`)
+  CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`Producto`) REFERENCES `producto` (`Codigo`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `detalle_pedido` */
+
+/*Table structure for table `divisa` */
+
+DROP TABLE IF EXISTS `divisa`;
+
+CREATE TABLE `divisa` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+/*Data for the table `divisa` */
+
+/*Table structure for table `historico_divisa` */
+
+DROP TABLE IF EXISTS `historico_divisa`;
+
+CREATE TABLE `historico_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `valor` decimal(12,2) NOT NULL,
+  `cod` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cod` (`cod`),
+  CONSTRAINT `historico_divisa_ibfk_1` FOREIGN KEY (`cod`) REFERENCES `divisa` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+/*Data for the table `historico_divisa` */
 
 /*Table structure for table `pedido` */
 
@@ -62,7 +75,7 @@ CREATE TABLE `pedido` (
   `Repartidor` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
   `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
   `Total` decimal(12,2) NOT NULL,
-  `Divisa` decimal(12,2) NOT NULL,
+  `Divisa` int(11) NOT NULL,
   PRIMARY KEY (`Numero`),
   KEY `Cliente` (`Cliente`),
   CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Cliente`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
@@ -133,6 +146,23 @@ CREATE TABLE `usuario_rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `usuario_rol` */
+
+/*Table structure for table `valor_divisa` */
+
+DROP TABLE IF EXISTS `valor_divisa`;
+
+CREATE TABLE `valor_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `historico` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `historico` (`historico`),
+  KEY `valor_divisa_ibfk_1` (`cliente`),
+  CONSTRAINT `valor_divisa_ibfk_1` FOREIGN KEY (`cliente`) REFERENCES `pedido` (`Cliente`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `valor_divisa_ibfk_2` FOREIGN KEY (`historico`) REFERENCES `historico_divisa` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+/*Data for the table `valor_divisa` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

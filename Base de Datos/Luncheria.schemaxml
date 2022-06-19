@@ -5,32 +5,24 @@
 </source>
 <canvas zoom="100">
 <tables>
-<table name="compañia" view="colnames">
-<left>34</left>
-<top>68</top>
-<width>99</width>
-<height>163</height>
-<sql_create_table>CREATE TABLE `compañia` (
-  `Rif` char(11) COLLATE utf8_spanish_ci NOT NULL,
-  `Nombre` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
-  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
-  `Telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
-  `Divisa` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`Rif`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
-</table>
 <table name="detalle_pedido" view="colnames">
-<left>607</left>
-<top>46</top>
+<left>599</left>
+<top>28</top>
 <width>97</width>
 <height>163</height>
 <sql_create_table>CREATE TABLE `detalle_pedido` (
-  `Numero` int(11) NOT NULL AUTO_INCREMENT,
+  `Nro_Movimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `Numero` int(11) NOT NULL,
   `Producto` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
   `Cantidad` int(11) NOT NULL,
   `TotalDls` decimal(12,2) NOT NULL,
   `TotalBs` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`Numero`,`Producto`)
+  PRIMARY KEY (`Nro_Movimiento`),
+  KEY `Nro_Movimiento` (`Nro_Movimiento`),
+  KEY `Numero` (`Numero`),
+  KEY `Producto` (`Producto`),
+  CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`Numero`) REFERENCES `pedido` (`Numero`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`Producto`) REFERENCES `producto` (`Codigo`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 <table name="pedido" view="colnames">
@@ -44,14 +36,15 @@
   `Repartidor` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
   `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
   `Total` decimal(12,2) NOT NULL,
-  `Divisa` decimal(12,2) NOT NULL,
-  PRIMARY KEY (`Numero`,`Cliente`,`Repartidor`),
-  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Numero`) REFERENCES `detalle_pedido` (`Numero`) ON DELETE NO ACTION ON UPDATE CASCADE
+  `Divisa` int(11) NOT NULL,
+  PRIMARY KEY (`Numero`),
+  KEY `Cliente` (`Cliente`),
+  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Cliente`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 <table name="producto" view="colnames">
-<left>799</left>
-<top>48</top>
+<left>834</left>
+<top>62</top>
 <width>112</width>
 <height>146</height>
 <sql_create_table>CREATE TABLE `producto` (
@@ -63,8 +56,8 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 <table name="rol" view="colnames">
-<left>802</left>
-<top>366</top>
+<left>646</left>
+<top>400</top>
 <width>96</width>
 <height>112</height>
 <sql_create_table>CREATE TABLE `rol` (
@@ -74,8 +67,8 @@
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 <table name="usuario" view="colnames">
-<left>379</left>
-<top>275</top>
+<left>218</left>
+<top>260</top>
 <width>112</width>
 <height>231</height>
 <sql_create_table>CREATE TABLE `usuario` (
@@ -92,8 +85,8 @@
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 <table name="usuario_rol" view="colnames">
-<left>609</left>
-<top>347</top>
+<left>415</left>
+<top>391</top>
 <width>86</width>
 <height>129</height>
 <sql_create_table>CREATE TABLE `usuario_rol` (
@@ -105,6 +98,48 @@
   KEY `Cedula` (`Cedula`),
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`Rol_id`) REFERENCES `rol` (`Rol_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="Divisa" view="colnames">
+<left>800</left>
+<top>274</top>
+<width>110</width>
+<height>108</height>
+<sql_create_table>CREATE TABLE `divisa` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="historico_divisa" view="colnames">
+<left>648</left>
+<top>223</top>
+<width>77</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `historico_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `valor` decimal(12,2) NOT NULL,
+  `cod` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cod` (`cod`),
+  CONSTRAINT `historico_divisa_ibfk_1` FOREIGN KEY (`cod`) REFERENCES `divisa` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="valor_divisa" view="colnames">
+<left>514</left>
+<top>226</top>
+<width>94</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `valor_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `historico` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `historico` (`historico`),
+  KEY `valor_divisa_ibfk_1` (`cliente`),
+  CONSTRAINT `valor_divisa_ibfk_1` FOREIGN KEY (`cliente`) REFERENCES `pedido` (`Cliente`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `valor_divisa_ibfk_2` FOREIGN KEY (`historico`) REFERENCES `historico_divisa` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
 </table>
 </tables>
