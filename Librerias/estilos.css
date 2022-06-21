@@ -2,3 +2,12 @@
     width: 480px;
     height: 650px;
 }
+
+label.error {
+    color: red;
+}
+
+input.error,
+select.error {
+    border: 1px solid red;
+}
