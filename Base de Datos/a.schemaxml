@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_spanish_ci">luncheria</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="detalle_pedido" view="colnames">
+<left>290</left>
+<top>19</top>
+<width>138</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `detalle_pedido` (
+  `Nro_Movimiento` int(11) NOT NULL AUTO_INCREMENT,
+  `Numero` int(11) NOT NULL,
+  `Producto` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `TotalDls` decimal(12,2) NOT NULL,
+  `TotalBs` decimal(12,2) NOT NULL,
+  PRIMARY KEY (`Nro_Movimiento`),
+  KEY `Nro_Movimiento` (`Nro_Movimiento`),
+  KEY `Numero` (`Numero`),
+  KEY `Producto` (`Producto`),
+  CONSTRAINT `detalle_pedido_ibfk_1` FOREIGN KEY (`Numero`) REFERENCES `pedido` (`Numero`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `detalle_pedido_ibfk_2` FOREIGN KEY (`Producto`) REFERENCES `producto` (`Codigo`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="divisa" view="colnames">
+<left>30</left>
+<top>272</top>
+<width>110</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `divisa` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="historico_divisa" view="colnames">
+<left>188</left>
+<top>289</top>
+<width>77</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `historico_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `valor` decimal(12,2) NOT NULL,
+  `cod` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cod` (`cod`),
+  CONSTRAINT `historico_divisa_ibfk_1` FOREIGN KEY (`cod`) REFERENCES `divisa` (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="pedido" view="colnames">
+<left>450</left>
+<top>261</top>
+<width>106</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `pedido` (
+  `Numero` int(11) NOT NULL AUTO_INCREMENT,
+  `Cliente` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Repartidor` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Total` decimal(12,2) NOT NULL,
+  `Divisa` int(11) NOT NULL,
+  PRIMARY KEY (`Numero`),
+  KEY `Cliente` (`Cliente`),
+  CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`Cliente`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="producto" view="colnames">
+<left>21</left>
+<top>45</top>
+<width>112</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `producto` (
+  `Codigo` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
+  `Descripcion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Precio` decimal(12,2) NOT NULL,
+  `Estatus` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="rol" view="colnames">
+<left>667</left>
+<top>65</top>
+<width>96</width>
+<height>112</height>
+<sql_create_table>CREATE TABLE `rol` (
+  `Rol_id` int(11) NOT NULL AUTO_INCREMENT,
+  `Desc_rol` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Rol_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="usuario" view="colnames">
+<left>689</left>
+<top>300</top>
+<width>112</width>
+<height>231</height>
+<sql_create_table>CREATE TABLE `usuario` (
+  `Cedula` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Usuario` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `Contraseña` varchar(25) COLLATE utf8_spanish_ci NOT NULL,
+  `Nombres` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Apellidos` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Email` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Direccion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
+  `Telefono` char(12) COLLATE utf8_spanish_ci NOT NULL,
+  `Estatus` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`Cedula`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="usuario_rol" view="colnames">
+<left>891</left>
+<top>177</top>
+<width>86</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `usuario_rol` (
+  `Id_Rol` int(11) NOT NULL AUTO_INCREMENT,
+  `Rol_id` int(11) DEFAULT NULL,
+  `Cedula` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`Id_Rol`),
+  KEY `Rol_id` (`Rol_id`),
+  KEY `Cedula` (`Cedula`),
+  CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`Rol_id`) REFERENCES `rol` (`Rol_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+<table name="valor_divisa" view="colnames">
+<left>316</left>
+<top>402</top>
+<width>94</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `valor_divisa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cliente` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `historico` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `historico` (`historico`),
+  KEY `valor_divisa_ibfk_1` (`cliente`),
+  CONSTRAINT `valor_divisa_ibfk_1` FOREIGN KEY (`cliente`) REFERENCES `pedido` (`Cliente`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `valor_divisa_ibfk_2` FOREIGN KEY (`historico`) REFERENCES `historico_divisa` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
