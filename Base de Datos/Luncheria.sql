@@ -130,8 +130,6 @@ CREATE TABLE `usuario` (
 
 /*Data for the table `usuario` */
 
-insert  into `usuario`(`Cedula`,`Usuario`,`Contraseña`,`Nombres`,`Apellidos`,`Email`,`Direccion`,`Telefono`,`Estatus`) values ('28505509','admin','d033e22ae348aeb5660fc2140','Danny','Endara','dannyendara28@gmail.com','Av. Aranzazu','0424-4543543','1'),('31456713','cliente','d94019fd760a71edf11844bb5','Daliannis','Endara','endaradaliannis@gmail.com','Av. Aranzazu','0414-4213293','1');
-
 /*Table structure for table `usuario_rol` */
 
 DROP TABLE IF EXISTS `usuario_rol`;
@@ -145,11 +143,9 @@ CREATE TABLE `usuario_rol` (
   KEY `Cedula` (`Cedula`),
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`Rol_id`) REFERENCES `rol` (`Rol_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`Cedula`) REFERENCES `usuario` (`Cedula`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `usuario_rol` */
-
-insert  into `usuario_rol`(`Id_Rol`,`Rol_id`,`Cedula`) values (1,4,'28505509'),(2,2,'31456713');
 
 /*Table structure for table `valor_divisa` */
 

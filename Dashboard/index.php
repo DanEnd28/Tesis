@@ -22,13 +22,11 @@ if ($_POST) {
 
             $_SESSION['Cedula'] = $row['usuario.Cedula'];
             $_SESSION['Rol'] = $row['usuario_rol.Rol_id'];
-            $_SESSION['Usuario'] = $row['usuario.Usuario'];
-            $_SESSION['Cedula'] = $row['usuario.Cedula'];
 
-            header('Location: principal.php');
+            header('Location: blank.html');
 
         } else {
-            echo '<script type="text/javascript"> alert("Contraseña no Coincide") </script>';
+            echo '<script type="text/javascript"> alert("") </script>';
         }
     } else {
         echo '<script type="text/javascript"> alert("No existe usuario") </script>';
