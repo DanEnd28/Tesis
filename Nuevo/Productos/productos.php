@@ -3,10 +3,10 @@
 include("../../Model/conexion.php");
 $con = conectar();
 
-$sql1 = "SELECT * FROM producto WHERE Estatus='1' ORDER BY Codigo";
+$sql1 = "SELECT * FROM producto WHERE Estatus=1 ORDER BY Codigo";
 $query1 = mysqli_query($con, $sql1);
 
-$sql2 = "SELECT * FROM producto WHERE Estatus='0' ORDER BY Codigo desc";
+$sql2 = "SELECT * FROM producto WHERE Estatus=0 ORDER BY Codigo desc";
 $query2 = mysqli_query($con, $sql2);
 
 
@@ -59,8 +59,8 @@ $query2 = mysqli_query($con, $sql2);
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
-                <a href="index.php" class="navbar-brand mx-4 mb-3">
-                    <img class="tamano d-inline-flex align-items-center" src="Imagenes/Empanada.png" alt="Emp">
+                <a href="../index.php" class="navbar-brand mx-4 mb-3">
+                    <img class="tamano d-inline-flex align-items-center" src="../Imagenes/Empanada.png" alt="Emp">
                     <h3 class="text-warning d-inline-flex align-items-center"><i class="fa me-2"></i>Mi Exito</h3>
                 </a>
                 <div class="d-flex d-inline-flex align-items-center ms-4 mb-4">
@@ -110,46 +110,6 @@ $query2 = mysqli_query($con, $sql2);
                 </a>
                 <!--ARRIBA Y A LA DERECHA-->
                 <div class="navbar-nav align-items-center ms-auto">
-                    <!--MENSAJES-->
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <i class="fa fa-envelope me-lg-2"></i>
-                            <span class="d-none d-lg-inline-flex">Mensajes</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                    <div class="ms-2">
-                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                        <small>15 minutes ago</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <hr class="dropdown-divider">
-                            <a href="#" class="dropdown-item text-center">See all message</a>
-                        </div>
-                    </div>
                     <!--NOTIFICACIONES-->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -247,14 +207,14 @@ $query2 = mysqli_query($con, $sql2);
                                                 <td><?php echo $row['Codigo'] ?></td>
                                                 <td><?php echo $row['Descripcion'] ?></td>
                                                 <td><?php echo $row['Precio'] ?></td>
-                                                <td><?php if ($row['Estatus'] == '1') {
+                                                <td><?php if ($row['Estatus'] == 1) {
                                                         echo 'Activo';
                                                     } else {
                                                         echo 'Inactivo';
                                                     } ?></td>
-                                                <td><button class="btn btn-sm align-center btn-danger" action="desactivar.php" method="POST">Desactivar</button>
-                                                </td>
-                                                <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php">Modificar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo $row['Codigo'] ?>">Desactivar</a></td>
+                                                <td><form action="desactivar.php?id=<?php echo $row['Codigo'] ?>" method="POST"><button type="submit" class="btn btn-sm align-center btn-danger">Desactivate</button></form></td>
+                                                <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo $row['Codigo'] ?>">Modificar</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -292,13 +252,13 @@ $query2 = mysqli_query($con, $sql2);
                                         <td><?php echo $row['Codigo'] ?></td>
                                         <td><?php echo $row['Descripcion'] ?></td>
                                         <td><?php echo $row['Precio'] ?></td>
-                                        <td><?php if ($row['Estatus'] == '1') {
+                                        <td><?php if ($row['Estatus'] == 1) {
                                                 echo 'Activo';
                                             } else {
                                                 echo 'Inactivo';
                                             } ?></td>
-                                        <td><a class="btn btn-sm align-center btn-success" href="">Activar</a></td>
-                                        <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php">Modificar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo $row['Codigo'] ?>">Activar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo $row['Codigo'] ?>">Modificar</a></td>
                                     </tr>
                                 <?php
                                 }
