@@ -213,7 +213,6 @@ $query2 = mysqli_query($con, $sql2);
                                                         echo 'Inactivo';
                                                     } ?></td>
                                                 <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo $row['Codigo'] ?>">Desactivar</a></td>
-                                                <td><form action="desactivar.php?id=<?php echo $row['Codigo'] ?>" method="POST"><button type="submit" class="btn btn-sm align-center btn-danger">Desactivate</button></form></td>
                                                 <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo $row['Codigo'] ?>">Modificar</a></td>
                                             </tr>
                                         <?php

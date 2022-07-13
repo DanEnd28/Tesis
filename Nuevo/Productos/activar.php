@@ -2,7 +2,7 @@
 include("../../Model/conexion.php");
 $con=conectar();
 
-$Codigo=$_POST['Codigo'];
+$Codigo=$_GET['id'];
 
 $sql="UPDATE `producto` SET Estatus=1 WHERE Codigo='$Codigo'";
 $query=mysqli_query($con,$sql);
