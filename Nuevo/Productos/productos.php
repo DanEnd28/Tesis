@@ -1,5 +1,5 @@
 <?php
-
+include("../../Config/config.php");
 include("../../Model/conexion.php");
 $con = conectar();
 
@@ -212,8 +212,8 @@ $query2 = mysqli_query($con, $sql2);
                                                     } else {
                                                         echo 'Inactivo';
                                                     } ?></td>
-                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo $row['Codigo'] ?>">Desactivar</a></td>
-                                                <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo $row['Codigo'] ?>">Modificar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY)?>">Desactivar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY)?>">Modificar</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -256,8 +256,8 @@ $query2 = mysqli_query($con, $sql2);
                                             } else {
                                                 echo 'Inactivo';
                                             } ?></td>
-                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo $row['Codigo'] ?>">Activar</a></td>
-                                        <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo $row['Codigo'] ?>">Modificar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY) ?>">Activar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY) ?>">Modificar</a></td>
                                     </tr>
                                 <?php
                                 }
