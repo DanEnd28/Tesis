@@ -212,8 +212,8 @@ $query2 = mysqli_query($con, $sql2);
                                                     } else {
                                                         echo 'Inactivo';
                                                     } ?></td>
-                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY)?>">Desactivar</a></td>
-                                                <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY)?>">Modificar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Desactivar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-primary" data-bs-toggle="modal" data-bs-target="#modificar" >Modificar</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -256,8 +256,8 @@ $query2 = mysqli_query($con, $sql2);
                                             } else {
                                                 echo 'Inactivo';
                                             } ?></td>
-                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY) ?>">Activar</a></td>
-                                        <td><a class="btn btn-sm align-center btn-primary" href="actualizar.php?id=<?php echo openssl_encrypt($row['Codigo'],AES,KEY) ?>">Modificar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Activar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-primary" data-bs-toggle="modal" data-bs-target="#modificar" >Modificar</a></td>
                                     </tr>
                                 <?php
                                 }
@@ -271,6 +271,46 @@ $query2 = mysqli_query($con, $sql2);
 
             <!-- Blank End -->
 
+            <!-- Modal -->
+            <div class="modal fade" id="modificar" tabindex="-1" aria-labelledby="modificarlabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modificarlabel">Modificar Producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="modificar.php" method="POST">
+                                <div class="mb-3">
+                                    <label for="Codigo" class="form-label">Codigo</label>
+                                    <input type="text" class="form-control" id="Codigo" name="Codigo" disabled="disbled">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Descripcion" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="Descripcion" name="Descripcion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Precio" class="form-label">Precio</label>
+                                    <input type="text" class="form-control" id="Precio" name="Precio">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Estatus" class="form-label">Estatus</label>
+                                    <select class="form-select" id="Estatus" name="Estatus">
+                                        <option value=""></option>
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
 
             <!-- Footer Start -->
             <div class="container-fluid pt-4 px-4">
@@ -280,7 +320,6 @@ $query2 = mysqli_query($con, $sql2);
                             &copy; <a href="#">Luncheria Mi Exito</a>, Todos los derechos reservados.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                             Diseñando por Danny Endara y Jhonatan Ferrer.
                         </div>
                     </div>
