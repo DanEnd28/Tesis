@@ -212,8 +212,8 @@ $query2 = mysqli_query($con, $sql2);
                                                     } else {
                                                         echo 'Inactivo';
                                                     } ?></td>
-                                                <td><a class="btn btn-sm align-center btn-danger" href="desactivar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Desactivar</a></td>
-                                                <td><a class="btn btn-sm align-center btn-primary" data-bs-toggle="modal" data-bs-target="#modificar" >Modificar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-danger desbtn" href="desactivar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Desactivar</a></td>
+                                                <td><a class="btn btn-sm align-center btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#modificar">Modificar</a></td>
                                             </tr>
                                         <?php
                                         }
@@ -256,8 +256,8 @@ $query2 = mysqli_query($con, $sql2);
                                             } else {
                                                 echo 'Inactivo';
                                             } ?></td>
-                                        <td><a class="btn btn-sm align-center btn-success" href="activar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Activar</a></td>
-                                        <td><a class="btn btn-sm align-center btn-primary" data-bs-toggle="modal" data-bs-target="#modificar" >Modificar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-success actbtn" href="activar.php?id=<?php echo openssl_encrypt($row['Codigo'], AES, KEY) ?>">Activar</a></td>
+                                        <td><a class="btn btn-sm align-center btn-primary editbtn" data-bs-toggle="modal" data-bs-target="#modificar">Modificar</a></td>
                                     </tr>
                                 <?php
                                 }
@@ -283,29 +283,21 @@ $query2 = mysqli_query($con, $sql2);
                             <form action="modificar.php" method="POST">
                                 <div class="mb-3">
                                     <label for="Codigo" class="form-label">Codigo</label>
-                                    <input type="text" class="form-control" id="Codigo" name="Codigo" disabled="disbled">
+                                    <input type="text" class="form-control" id="CodigoM" name="CodigoM">
                                 </div>
                                 <div class="mb-3">
                                     <label for="Descripcion" class="form-label">Descripción</label>
-                                    <input type="text" class="form-control" id="Descripcion" name="Descripcion">
+                                    <input type="text" class="form-control" id="DescripcionM" name="DescripcionM">
                                 </div>
                                 <div class="mb-3">
                                     <label for="Precio" class="form-label">Precio</label>
-                                    <input type="text" class="form-control" id="Precio" name="Precio">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Estatus" class="form-label">Estatus</label>
-                                    <select class="form-select" id="Estatus" name="Estatus">
-                                        <option value=""></option>
-                                        <option value="1">Activo</option>
-                                        <option value="0">Inactivo</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="PrecioM" name="PrecioM">
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                         </div>
                     </div>
                 </div>
@@ -335,8 +327,8 @@ $query2 = mysqli_query($con, $sql2);
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../Librerias/jquery-3.4.1.min.js"></script>
+    <script src="../../Librerias/bootstrap.bundle.min.js"></script>
     <script src="../lib/chart/chart.min.js"></script>
     <script src="../lib/easing/easing.min.js"></script>
     <script src="../lib/waypoints/waypoints.min.js"></script>
@@ -347,6 +339,40 @@ $query2 = mysqli_query($con, $sql2);
 
     <!-- Template Javascript -->
     <script src="../js/main.js"></script>
+
+    <!--Sweet Alert-->
+    <script src="../../Librerias/sweetalert2.js"></script>
+
+    <!--Eventos-->
+
+    <script>
+        $('.editbtn').on('click', function() {
+            $tr = $(this).closest('tr');
+            var datos = $tr.children("td").map(function() {
+                return $(this).text();
+            });
+            $('#CodigoM').val(datos[0]);
+            $('#DescripcionM').val(datos[1]);
+            $('#PrecioM').val(datos[2]);
+        });
+        $('.desbtn').on('click', function() {
+            Swal.fire({
+                position: 'center',
+                title: 'Desactivado',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
+        $('.actbtn').on('click', function() {
+            Swal.fire({
+                position: 'center',
+                title: 'Activado',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        });
+    </script>
+
 </body>
 
 </html>

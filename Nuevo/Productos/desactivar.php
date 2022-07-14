@@ -10,10 +10,5 @@ $query=mysqli_query($con,$sql);
 
     if($query){
         Header("Location: productos.php");
-        
     }
 ?>
-<script>
-    alert("Regisatro Grabado con Exito");+
-    history.back();
-</script>
