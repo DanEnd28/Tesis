@@ -58,19 +58,19 @@
                                 <img class="logitologin d-inline-flex" src="Imagenes/Empanada.png" alt="Emp">
                             </a>
                         </div>
-                        <form action="index.php" method="POST">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                <label for="floatingInput">Usuario</label>
+                                <input type="text" class="form-control" id="User" name="User">
+                                <label for="User">Usuario</label>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                <label for="floatingPassword">Contraseña</label>
+                                <input type="password" class="form-control" id="Pass" name="Pass">
+                                <label for="Pass">Contraseña</label>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1">Mostrar Contraseña</label>
+                                    <input type="checkbox" class="form-check-input" id="SeePass" name="SeePass">
+                                    <label class="form-check-label" for="SeePass">Mostrar Contraseña</label>
                                 </div>
                         </form>
                     </div>
