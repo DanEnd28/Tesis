@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    $Usuario=$_SESSION['Usuario'];
+    $Nombre=$_SESSION['Nombre'];
+    $Apellido=$_SESSION['Apellido'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,8 +60,7 @@
                 </a>
                 <div class="d-flex d-inline-flex align-items-center ms-4 mb-4">
                     <div>
-                        <h6 class="mb-0 d-inline-flex">USUARIO</h6>
-                        <span class="d-inline-flex">ROL</span>
+                        <h6 class="mb-0 d-inline-flex"><?php echo $Nombre.' '.$Apellido ?></h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">

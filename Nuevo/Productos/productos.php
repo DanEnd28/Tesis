@@ -9,6 +9,11 @@ $query1 = mysqli_query($con, $sql1);
 $sql2 = "SELECT * FROM producto WHERE Estatus=0 ORDER BY Codigo desc";
 $query2 = mysqli_query($con, $sql2);
 
+session_start();
+
+//$Usuario=$_SESSION['Usuario'];
+//$Nombre=$_SESSION['Nombre'];
+//$Apellido=$_SESSION['Apellido'];
 
 ?>
 <!DOCTYPE html>
@@ -65,8 +70,7 @@ $query2 = mysqli_query($con, $sql2);
                 </a>
                 <div class="d-flex d-inline-flex align-items-center ms-4 mb-4">
                     <div>
-                        <h6 class="mb-0 d-inline-flex">USUARIO</h6>
-                        <span class="d-inline-flex">ROL</span>
+                        <h6 class="mb-0 d-inline-flex"><?php echo $Nombre . ' ' . $Apellido ?></h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -150,6 +154,7 @@ $query2 = mysqli_query($con, $sql2);
             </nav>
             <!-- Navbar End -->
 
+            Warning: Undefined array key "Usuario" in C:\Program Files\Xampp\htdocs\Tesis\Nuevo\Productos\productos.php on line 14
 
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4">
@@ -293,12 +298,13 @@ $query2 = mysqli_query($con, $sql2);
                                     <label for="Precio" class="form-label">Precio</label>
                                     <input type="text" class="form-control" id="PrecioM" name="PrecioM">
                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        </div>
+
                     </div>
                 </div>
             </div>
