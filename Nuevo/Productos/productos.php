@@ -70,7 +70,7 @@ session_start();
                 </a>
                 <div class="d-flex d-inline-flex align-items-center ms-4 mb-4">
                     <div>
-                        <h6 class="mb-0 d-inline-flex"><?php echo $Nombre . ' ' . $Apellido ?></h6>
+                        <h6 class="mb-0 d-inline-flex"><?php echo $Usuario?></h6>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -142,7 +142,7 @@ session_start();
                     <!--USUARIO-->
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <span class="d-none d-lg-inline-flex">USUARIO</span>
+                            <span class="d-none d-lg-inline-flex"><?php echo $Nombre . ' ' . $Apellido ?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">Perfil</a>

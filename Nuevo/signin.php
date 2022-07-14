@@ -1,6 +1,39 @@
 <?php
+require "../Model/conexion.php";
 
+if ($_POST) {
 
+    $Usuario = $_POST('User');
+    $Password = $_POST('Pass');
+
+    $sql = "SELECT * FROM Usuario WHERE Usuario = '$Usuario'";
+
+    $resultado = $mysql->query($sql);
+    $num = $resultado->num_rows;
+
+    if ($num > 0) {
+        $row = $resultado->fetch_assoc();
+        $password_bd = $row('Pass');
+        $pass_c = sha1($Password);
+
+        if ($password_bd == $pass_c) {
+
+            $_SESSION['Cedula'] = $row['Cedula'];
+            $_SESSION['Nombres'] = $row['Nombres'];
+            $_SESSION['Apellidos'] = $row['Apellidos'];
+            $_SESSION['Email'] = $row['Email'];
+            $_SESSION['Direccion'] = $row['Direccion'];
+            $_SESSION['Telefono'] = $row['Telefono'];
+            $_SESSION['Estatus'] = $row['Estatus'];
+
+            header("Location: index.php");
+        } else {
+            echo "La contraseña no coindide";
+        }
+    } else {
+        echo "No existe el usuario";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -58,7 +91,7 @@
                                 <img class="logitologin d-inline-flex" src="Imagenes/Empanada.png" alt="Emp">
                             </a>
                         </div>
-                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="User" name="User">
                                 <label for="User">Usuario</label>
@@ -72,9 +105,11 @@
                                     <input type="checkbox" class="form-check-input" id="SeePass" name="SeePass">
                                     <label class="form-check-label" for="SeePass">Mostrar Contraseña</label>
                                 </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Ingresar</button>
                         </form>
-                    </div>
-                    <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Ingresar</button>
+                    
+                    
                     <p class="text-center mb-0">Olvido la Contraseña? <a href="">Recuperar</a></p>
                     <p class="text-center mb-0">No tiene Cuenta? <a href="">Registrarse</a></p>
                 </div>
