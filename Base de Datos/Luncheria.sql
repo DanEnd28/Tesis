@@ -91,11 +91,13 @@ CREATE TABLE `producto` (
   `Codigo` varchar(6) COLLATE utf8_spanish_ci NOT NULL,
   `Descripcion` varchar(252) COLLATE utf8_spanish_ci NOT NULL,
   `Precio` decimal(12,2) NOT NULL,
-  `Estatus` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  `Estatus` int(1) NOT NULL,
   PRIMARY KEY (`Codigo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `producto` */
+
+insert  into `producto`(`Codigo`,`Descripcion`,`Precio`,`Estatus`) values ('EMP001','Empanada de Queso',0.30,1),('EMP002','Empanada de Jamón con Queso',0.30,1),('REF001','CocaCola',0.80,1),('REF002','Malta',0.60,1);
 
 /*Table structure for table `rol` */
 
