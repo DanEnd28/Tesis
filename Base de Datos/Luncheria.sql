@@ -97,7 +97,7 @@ CREATE TABLE `producto` (
 
 /*Data for the table `producto` */
 
-insert  into `producto`(`Codigo`,`Descripcion`,`Precio`,`Estatus`) values ('EMP001','Empanada de Queso',0.30,1),('EMP002','Empanada de Jamón con Queso',0.30,1),('REF001','CocaCola',0.80,1),('REF002','Malta',0.60,1);
+insert  into `producto`(`Codigo`,`Descripcion`,`Precio`,`Estatus`) values ('EMP001','Empanada de Queso',0.40,1),('EMP002','Empanada de Jamón con Queso',1.00,1),('REF001','CocaCola',0.80,1),('REF002','Malta',0.60,1);
 
 /*Table structure for table `rol` */
 
@@ -131,6 +131,8 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 /*Data for the table `usuario` */
+
+insert  into `usuario`(`Cedula`,`Usuario`,`Contraseña`,`Nombres`,`Apellidos`,`Email`,`Direccion`,`Telefono`,`Estatus`) values ('28505509','Dan','60b543bfaaf4e1677077510d0','Danny','Endara','dannyendara28@gmail.com','Av.Aranzazu','0424-4543543','1');
 
 /*Table structure for table `usuario_rol` */
 
